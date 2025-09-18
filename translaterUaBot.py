@@ -1,7 +1,11 @@
 from telebot import TeleBot
 import translators
+import os
+from dotenv import load_dotenv
 
-TOKEN = "7961804737:AAENDBOOUF3D8XsSfjoPepeUOo9hxhZimgI"
+load_dotenv()
+
+TOKEN = os.getenv('TELEGRAM_TOKEN')
 
 bot = TeleBot(TOKEN)
 
