@@ -33,24 +33,21 @@ def send_welcome(message):
     user_translator[message.from_user.id]['language_translate_into'] = languages_translate_into[message.text]
     user_name = message.from_user.first_name
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    itembtn1 = types.KeyboardButton('Alibaba')
-    itembtn2 = types.KeyboardButton('Baidu')
-    itembtn3 = types.KeyboardButton('Bing')
-    itembtn4 = types.KeyboardButton('Google')
-    itembtn5 = types.KeyboardButton('MyMemory')
-    itembtn6 = types.KeyboardButton('ModernMt')
-    markup.add(itembtn1, itembtn2, itembtn3, itembtn4, itembtn5, itembtn6)
+    itembtn1 = types.KeyboardButton('Baidu')
+    itembtn2 = types.KeyboardButton('Bing')
+    itembtn3 = types.KeyboardButton('Google')
+    markup.add(itembtn1, itembtn2, itembtn3)
     bot.send_message(message.chat.id, f"{user_name.capitalize()}, please select which translater you want to use.", reply_markup=markup)
     return user_translator
 
-@bot.message_handler(func=lambda message: message.text in ['Alibaba', 'Baidu', 'Bing', 'Google', 'MyMemory', 'ModernMt'])
+@bot.message_handler(func=lambda message: message.text in ['Baidu', 'Bing', 'Google'])
 def handle_translator(message):
     user_translator[message.from_user.id]['translator'] = message.text
     remove_markup = types.ReplyKeyboardRemove()
     bot.reply_to(message, f"Perfect! Now we are working with {message.text} translator. Please write what do you want to translate.", reply_markup=remove_markup)
     return user_translator
 
-@bot.message_handler(func=lambda message: message.text not in ['Alibaba', 'Baidu', 'Bing', 'Google', 'MyMemory', 'ModernMt', 'Change translator'])
+@bot.message_handler(func=lambda message: message.text not in ['Baidu', 'Bing', 'Google', 'Change translator'])
 def translate_message(message):
     try:
         text_to_translate = message.text
